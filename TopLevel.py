@@ -12,11 +12,15 @@ from Match import Match
 
 def main():
     match = Match()
-
+    
     while match.stillPlaying():
         print(match.draw())
-        a = input("wait")
-
+        a = input()
+        match.recognizeInput(a)
+        b = input()
+        match.recognizeInput(b)
+        
+        match.update()
     match.gameEnd()
 
 

@@ -80,6 +80,15 @@ class Pitch:
             for j in self.mapOfPitch[i]:
                 printMe += j
             printMe += "\n"
-
         return printMe
+
+    def isPositionFree(self, row, column):
+        position = self.mapOfPitch[row][column]
+        if position == " " or position == "*":
+            return True
+        else:
+            return False
+
+    def clearPosition(self, row, column):
+        self.mapOfPitch[row][column] = " "
 
