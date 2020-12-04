@@ -18,3 +18,6 @@ class GoldenSnitch(MovingObject):
 
     def isFree(self):
         return self.free
+
+    def captured(self):
+        self.free = False

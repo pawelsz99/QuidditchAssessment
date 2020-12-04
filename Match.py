@@ -15,7 +15,7 @@ from Team import Team
 
 class Match():
     def __init__(self):
-        self.pith = Pitch()  # 20x10
+        self.pitch = Pitch()  # 20x10
         self.teams = [Team("A"), Team("B")]
         # placing seekers to starting positions
         self.teams[0].seeker.setRow(1)
@@ -31,7 +31,7 @@ class Match():
             "border": "#",
             "emptySpace": " "
         }
-        self.updatePitch(self.pith, self.teams, self.goldenSnitch)
+        self.updatePitch()
 
     def gameEnd(self):
         print("game ends")
@@ -43,23 +43,48 @@ class Match():
         else:
             return False
 
-    def update(self):
-        self.updatePitch(self.pith, self.teams, self.goldenSnitch)
+    def awardPoints(self, team):
+        team.addPoints(150)
 
-    def updatePitch(self, pitch, teams, goldenSnitch):
-        # remember to clear the positions before placing new chars
-        pitch.placeOnPitch(
-            self.charDict["seeker"], teams[0].seeker.getRow(), teams[0].seeker.getColumn())
-        pitch.placeOnPitch(
-            self.charDict["seeker"], teams[1].seeker.getRow(), teams[1].seeker.getColumn())
-        pitch.placeOnPitch(
-            self.charDict["goldenSnitch"], goldenSnitch.getRow(), goldenSnitch.getColumn())
+    def update(self):
+        self.checkSnitch()
+        self.updatePitch()
+
+    def checkSnitch(self):
+        snitch = self.goldenSnitch
+        seeker1 = self.teams[0].seeker
+        seeker2 = self.teams[1].seeker
+
+        if snitch.getRow() == seeker1.getRow() and snitch.getColumn() == seeker1.getColumn():
+            print("Snitch captured by team 1 ")
+            self.awardPoints(self.teams[0])
+            snitch.captured()
+        elif snitch.getRow() == seeker2.getRow() and snitch.getColumn() == seeker2.getColumn():
+            print("Snitch captured by team 2 ")
+            self.awardPoints(self.teams[1])
+            snitch.captured()
+
+    def updatePitch(self):
+        self.pitch.placeOnPitch(
+            self.charDict["seeker"], self.teams[0].seeker.getRow(), self.teams[0].seeker.getColumn())
+        self.pitch.placeOnPitch(
+            self.charDict["seeker"], self.teams[1].seeker.getRow(), self.teams[1].seeker.getColumn())
+        if self.goldenSnitch.isFree():
+            self.pitch.placeOnPitch(
+                self.charDict["goldenSnitch"], self.goldenSnitch.getRow(), self.goldenSnitch.getColumn())
 
     def draw(self):
-        return str(self.pith)
+        return str(self.pitch)
+
+    def printPoints(self):
+        printMe = "Team " + self.teams[0].name + \
+            " " + str(self.teams[0].getPoints())
+        printMe += " : " + \
+            str(self.teams[1].getPoints()) + " Team " + self.teams[1].name
+        return printMe
 
     def newPosition(self, seeker, newRow, newColumn):
-        if self.pith.isPositionFree(newRow, newColumn):
+        if self.pitch.isPositionFree(newRow, newColumn):
             seeker.move(newRow, newColumn)
             return True
         else:
@@ -72,41 +97,41 @@ class Match():
             # seeker1 left
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()-1):
-                self.pith.clearPosition(seeker.getRow(), seeker.getColumn()+1)
+                self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()+1)
         elif char == "D":
             # seeker1 right
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()+1):
-                self.pith.clearPosition(seeker.getRow(), seeker.getColumn()-1)
+                self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()-1)
         elif char == "W":
             # seeker1 up
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow()-1, seeker.getColumn()):
-                self.pith.clearPosition(seeker.getRow()+1, seeker.getColumn())
+                self.pitch.clearPosition(seeker.getRow()+1, seeker.getColumn())
         elif char == "S":
             # seeker1 down
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow()+1, seeker.getColumn()):
-                self.pith.clearPosition(seeker.getRow()-1, seeker.getColumn())
+                self.pitch.clearPosition(seeker.getRow()-1, seeker.getColumn())
         elif char == "J":
             # seeker2 left
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()-1):
-                self.pith.clearPosition(seeker.getRow(), seeker.getColumn()+1)
+                self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()+1)
         elif char == "L":
             # seeker2 right
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()+1):
-                self.pith.clearPosition(seeker.getRow(), seeker.getColumn()-1)
+                self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()-1)
         elif char == "I":
             # seeker2 up
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow()-1, seeker.getColumn()):
-                self.pith.clearPosition(seeker.getRow()+1, seeker.getColumn())
+                self.pitch.clearPosition(seeker.getRow()+1, seeker.getColumn())
         elif char == "K":
             # seeker2 down
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow()+1, seeker.getColumn()):
-                self.pith.clearPosition(seeker.getRow()-1, seeker.getColumn())
+                self.pitch.clearPosition(seeker.getRow()-1, seeker.getColumn())
         else:
             print("input fail")
