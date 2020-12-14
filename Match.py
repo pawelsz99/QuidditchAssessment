@@ -31,11 +31,38 @@ class Match():
             "border": "#",
             "emptySpace": " "
         }
+        self.level = 0
         self.updatePitch()
+
+    def reset(self):
+        # new map level
+        self.newLevel()
+        # placing seekers to starting positions
+        self.teams[0].seeker.setRow(1)
+        self.teams[0].seeker.setColumn(1)
+        self.teams[1].seeker.setRow(18)
+        self.teams[1].seeker.setColumn(1)
+        # and snitch in the middle
+        self.goldenSnitch = GoldenSnitch(10, 4)
+        
+
+    def newLevel(self):
+        maxLevel = self.pitch.getMaxLevel()
+        if self.level < maxLevel:
+            self.level += 1
+            self.pitch.setLevel(self.level)
+        else: 
+            print("Error no more levels")
+    
+    def noMoreLevels(self):
+        if self.level == self.pitch.getMaxLevel():
+            return True
+        else:
+            return False
 
     def gameEnd(self):
         print("game ends")
-        # TODO
+
 
     def stillPlaying(self):
         if self.goldenSnitch.isFree():
