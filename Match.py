@@ -33,7 +33,8 @@ class Match():
             "emptySpace": " "
         }
         self.level = 0
-        self.updatePitch()
+        self.updatePitchSeekers()
+        self.updatePitchSnitch()
 
     def reset(self):
         # new map level
@@ -74,30 +75,61 @@ class Match():
 
     def moveSnitch(self):
         snitch = self.goldenSnitch
-        if self.level > 0 and snitch.isFree():
-            # move random if no player next to
-            randomNumber = random.randint(0, 3)
-            if randomNumber == 0:  # left
-                if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()-1):
-                    self.pitch.clearPosition(
-                        snitch.getRow(), snitch.getColumn()+1)
-            elif randomNumber == 1:  # right
+        if self.level > 0 and snitch.isFree(): 
+            # if player next to run away
+            # check left
+            if self.pitch.isPlayerOnPosition(snitch.getRow(), snitch.getColumn()-1):
+                # run away, right
+                print("going right")
                 if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()+1):
                     self.pitch.clearPosition(
                         snitch.getRow(), snitch.getColumn()-1)
-            elif randomNumber == 2:  # up
-                if self.newPosition(snitch, snitch.getRow()-1, snitch.getColumn()):
+            # check right
+            elif self.pitch.isPlayerOnPosition(snitch.getRow(), snitch.getColumn()+1):
+                # run away, left
+                print("going left")
+                if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()-1):
                     self.pitch.clearPosition(
-                        snitch.getRow()+1, snitch.getColumn())
-            elif randomNumber == 3:  # down
+                        snitch.getRow(), snitch.getColumn()+1)
+            # check up
+            elif self.pitch.isPlayerOnPosition(snitch.getRow()-1, snitch.getColumn()):
+                # run away down
+                print("going down")
                 if self.newPosition(snitch, snitch.getRow()+1, snitch.getColumn()):
                     self.pitch.clearPosition(
                         snitch.getRow()-1, snitch.getColumn())
+            # check down
+            elif self.pitch.isPlayerOnPosition(snitch.getRow()+1, snitch.getColumn()):
+                # run away up
+                print("going up")
+                if self.newPosition(snitch, snitch.getRow()-1, snitch.getColumn()):
+                    self.pitch.clearPosition(
+                        snitch.getRow()+1, snitch.getColumn())
+            else:
+                # move random if no player next to
+                randomNumber = random.randint(0, 3)
+                if randomNumber == 0:  # left
+                    if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()-1):
+                        self.pitch.clearPosition(
+                            snitch.getRow(), snitch.getColumn()+1)
+                elif randomNumber == 1:  # right
+                    if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()+1):
+                        self.pitch.clearPosition(
+                            snitch.getRow(), snitch.getColumn()-1)
+                elif randomNumber == 2:  # up
+                    if self.newPosition(snitch, snitch.getRow()-1, snitch.getColumn()):
+                        self.pitch.clearPosition(
+                            snitch.getRow()+1, snitch.getColumn())
+                elif randomNumber == 3:  # down
+                    if self.newPosition(snitch, snitch.getRow()+1, snitch.getColumn()):
+                        self.pitch.clearPosition(
+                            snitch.getRow()-1, snitch.getColumn())
 
     def update(self):
         self.checkSnitch()
+        self.updatePitchSeekers()
         self.moveSnitch()
-        self.updatePitch()
+        self.updatePitchSnitch()
 
     def checkSnitch(self):
         snitch = self.goldenSnitch
@@ -113,11 +145,13 @@ class Match():
             self.awardPoints(self.teams[1])
             snitch.captured()
 
-    def updatePitch(self):
+    def updatePitchSeekers(self):
         self.pitch.placeOnPitch(
             self.charDict["seeker"], self.teams[0].seeker.getRow(), self.teams[0].seeker.getColumn())
         self.pitch.placeOnPitch(
             self.charDict["seeker"], self.teams[1].seeker.getRow(), self.teams[1].seeker.getColumn())
+
+    def updatePitchSnitch(self):
         if self.goldenSnitch.isFree():
             self.pitch.placeOnPitch(
                 self.charDict["goldenSnitch"], self.goldenSnitch.getRow(), self.goldenSnitch.getColumn())

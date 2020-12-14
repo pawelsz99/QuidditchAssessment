@@ -88,6 +88,15 @@ class Pitch:
             printMe += "\n"
         return printMe
 
+    def isPlayerOnPosition(self, row, column):
+        position = self.mapOfPitch[row][column]
+        if position == "!":
+            print(position + "player IS on position")
+            return True
+        else:
+            print(position + "player NO")
+            return False
+
     def isPositionFree(self, row, column):
         position = self.mapOfPitch[row][column]
         if position == " " or position == "*":
