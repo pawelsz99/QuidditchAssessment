@@ -91,10 +91,10 @@ class Pitch:
     def isPlayerOnPosition(self, row, column):
         position = self.mapOfPitch[row][column]
         if position == "!":
-            print(position + "player IS on position")
+            # print(position + "player IS on position")
             return True
         else:
-            print(position + "player NO")
+            # print(position + "player NO")
             return False
 
     def isPositionFree(self, row, column):
@@ -107,3 +107,5 @@ class Pitch:
     def clearPosition(self, row, column):
         self.mapOfPitch[row][column] = " "
 
+    def getCharAtPos(self, row, col):
+        return self.mapOfPitch[row][col]

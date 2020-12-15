@@ -80,28 +80,28 @@ class Match():
             # check left
             if self.pitch.isPlayerOnPosition(snitch.getRow(), snitch.getColumn()-1):
                 # run away, right
-                print("going right")
+                # print("going right")
                 if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()+1):
                     self.pitch.clearPosition(
                         snitch.getRow(), snitch.getColumn()-1)
             # check right
             elif self.pitch.isPlayerOnPosition(snitch.getRow(), snitch.getColumn()+1):
                 # run away, left
-                print("going left")
+                # print("going left")
                 if self.newPosition(snitch, snitch.getRow(), snitch.getColumn()-1):
                     self.pitch.clearPosition(
                         snitch.getRow(), snitch.getColumn()+1)
             # check up
             elif self.pitch.isPlayerOnPosition(snitch.getRow()-1, snitch.getColumn()):
                 # run away down
-                print("going down")
+                # print("going down")
                 if self.newPosition(snitch, snitch.getRow()+1, snitch.getColumn()):
                     self.pitch.clearPosition(
                         snitch.getRow()-1, snitch.getColumn())
             # check down
             elif self.pitch.isPlayerOnPosition(snitch.getRow()+1, snitch.getColumn()):
                 # run away up
-                print("going up")
+                # print("going up")
                 if self.newPosition(snitch, snitch.getRow()-1, snitch.getColumn()):
                     self.pitch.clearPosition(
                         snitch.getRow()+1, snitch.getColumn())
@@ -171,7 +171,7 @@ class Match():
             object.move(newRow, newColumn)
             return True
         else:
-            print("cant move")
+            # print("cant move")
             return False
 
     def recognizeInput(self, char):
