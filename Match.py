@@ -164,11 +164,21 @@ class Match():
         return str(self.pitch)
 
     def printPoints(self):
-        printMe = "Team " + self.teams[0].name + \
+        printMe = "Points: Team " + self.teams[0].name + \
             " " + str(self.teams[0].getPoints())
         printMe += " : " + \
             str(self.teams[1].getPoints()) + " Team " + self.teams[1].name
         return printMe
+
+    def printMoves(self):
+        printMe = "Moves: Team " + self.teams[0].name + \
+            " " + str(self.teams[0].seeker.getMovesMade())
+        printMe += " : " + \
+            str(self.teams[1].seeker.getMovesMade()) + " Team " + self.teams[1].name
+        return printMe
+    
+    def printLevel(self):
+        return "Level " + str(self.level + 1)
 
     def newPosition(self, object, newRow, newColumn):
         if self.pitch.isPositionFree(newRow, newColumn):
