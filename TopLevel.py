@@ -35,7 +35,7 @@ TEXTCOLOR = WHITE
 
 IMAGESDICT = {'floor': pygame.image.load("Images/floor.gif"),
               'wall': pygame.image.load("Images/wall.gif"),
-              'snitch': pygame.image.load("Images/snitch.gif"),
+              'snitch': pygame.image.load("Images/snitchbig.gif"),
               'seeker': pygame.image.load("Images/seeker.gif"),
               'spacer': pygame.image.load("Images/spacer.gif") }
 
