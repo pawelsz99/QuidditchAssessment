@@ -46,6 +46,10 @@ class Match():
         self.teams[1].seeker.setColumn(1)
         # and snitch in the middle
         self.goldenSnitch = GoldenSnitch(10, 4)
+        # reset the counter for moves made
+        self.teams[0].seeker.setMovesMade(0)
+        self.teams[1].seeker.setMovesMade(0)
+
 
     def newLevel(self):
         maxLevel = self.pitch.getMaxLevel()
@@ -173,6 +177,9 @@ class Match():
         else:
             # print("cant move")
             return False
+    
+    def addMovesSeeker(self, seeker):
+        seeker.addMovesMade()
 
     def recognizeInput(self, char):
         char = char.upper()
@@ -181,40 +188,48 @@ class Match():
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()-1):
                 self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()+1)
+                self.addMovesSeeker(seeker)
         elif char == "D":
             # seeker1 right
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()+1):
                 self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()-1)
+                self.addMovesSeeker(seeker)
         elif char == "W":
             # seeker1 up
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow()-1, seeker.getColumn()):
                 self.pitch.clearPosition(seeker.getRow()+1, seeker.getColumn())
+                self.addMovesSeeker(seeker)
         elif char == "S":
             # seeker1 down
             seeker = self.teams[0].seeker
             if self.newPosition(seeker, seeker.getRow()+1, seeker.getColumn()):
                 self.pitch.clearPosition(seeker.getRow()-1, seeker.getColumn())
+                self.addMovesSeeker(seeker)
         elif char == "J":
             # seeker2 left
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()-1):
                 self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()+1)
+                self.addMovesSeeker(seeker)
         elif char == "L":
             # seeker2 right
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow(), seeker.getColumn()+1):
                 self.pitch.clearPosition(seeker.getRow(), seeker.getColumn()-1)
+                self.addMovesSeeker(seeker)
         elif char == "I":
             # seeker2 up
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow()-1, seeker.getColumn()):
                 self.pitch.clearPosition(seeker.getRow()+1, seeker.getColumn())
+                self.addMovesSeeker(seeker)
         elif char == "K":
             # seeker2 down
             seeker = self.teams[1].seeker
             if self.newPosition(seeker, seeker.getRow()+1, seeker.getColumn()):
                 self.pitch.clearPosition(seeker.getRow()-1, seeker.getColumn())
+                self.addMovesSeeker(seeker)
         else:
             print("input fail")

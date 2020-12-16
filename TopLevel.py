@@ -94,6 +94,8 @@ def main():
             DISPLAYSURF.fill(BGCOLOR) #draws the turquoise background
             #if something has changed, redraw....
             if mapNeedsRedraw:
+                #print(str(match.teams[0].seeker.getMovesMade()))
+                #print(str(match.teams[1].seeker.getMovesMade()))
                 match.update()
                 mapSurf = drawMap(match.pitch)
                 mapNeedsRedraw = False
