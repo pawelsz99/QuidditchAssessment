@@ -54,11 +54,14 @@ pygame.init()
 FPSCLOCK = pygame.time.Clock()
 DISPLAYSURF = pygame.display.set_mode((WINWIDTH, WINHEIGHT))
 pygame.display.set_caption('Quidditch')
+pygame.display.set_icon(IMAGESDICT["seeker"])
 FONTHEIGHT = 32
 try:
     BASICFONT = pygame.font.Font('freesansbold.ttf', FONTHEIGHT)
 except:
     print("Font Error")
+
+CONTROLSINFO = "Controls: W S A D and Up Down Left Right"
 
 
 def main():
@@ -67,15 +70,13 @@ def main():
     match = Match()
     while True:
         while True:
-            # print(match.draw())
-            # print(match.printPoints())
-
             # thread 1 - look for an action
             for event in pygame.event.get():  # event handling loop
                 if event.type == QUIT:
                     # Player clicked the "X" at the corner of the window.
                     terminate()
                 elif event.type == KEYDOWN:
+                    # Player 1
                     if event.key == K_RIGHT:
                         match.recognizeInput("L")
                     elif event.key == K_UP:
@@ -84,8 +85,7 @@ def main():
                         match.recognizeInput("K")
                     elif event.key == K_LEFT:
                         match.recognizeInput("J")
-                    # elif event.key == K_SPACE:
-                    #     restart()
+                    # Player 2
                     if event.key == K_d:
                         match.recognizeInput("D")
                     elif event.key == K_w:
@@ -100,13 +100,14 @@ def main():
 
             # thread 2: redraw the screen
             DISPLAYSURF.fill(BGCOLOR)  # draws the turquoise background
-            # if something has changed, redraw....
+
+            # if something has changed, update the game and redraw....
             if mapNeedsRedraw:
-                # print(str(match.teams[0].seeker.getMovesMade()))
-                # print(str(match.teams[1].seeker.getMovesMade()))
                 match.update()
                 mapSurf = drawMap(match.pitch)
                 mapNeedsRedraw = False
+
+            # prepare map, text and the position
 
             mapSurfRect = mapSurf.get_rect()
             mapSurfRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
@@ -123,38 +124,28 @@ def main():
             levelTextSurfPosition = HALF_WINWIDTH - \
                 int(levelTextSurf.get_width() / 2)
 
-            # Draw the map on the DISPLAYSURF object.
+            controlsTextSurf = BASICFONT.render(CONTROLSINFO, True, BLACK)
+            controlsTextSurfPosition = WINHEIGHT - FONTHEIGHT
+
+            # Draw the map and text on the DISPLAYSURF object.
             DISPLAYSURF.blit(mapSurf, mapSurfRect)
             DISPLAYSURF.blit(scoreTextSurf, (scoreTextSurfPosition, 0))
             DISPLAYSURF.blit(
                 movesTextSurf, (movesTextSurfPosition, FONTHEIGHT))
             DISPLAYSURF.blit(
                 levelTextSurf, (levelTextSurfPosition, 2 * FONTHEIGHT))
+            DISPLAYSURF.blit(controlsTextSurf, (0, controlsTextSurfPosition))
 
             pygame.display.update()  # draw DISPLAYSURF to the screen.
             FPSCLOCK.tick()
 
-            # a = input()
-            # match.recognizeInput(a)
-            # b = input()
-            # match.recognizeInput(b)
-
-            # match.update()
-
             if not match.stillPlaying():
-                # before leaving the level print
-                # once more the map and points
-                # print(match.draw())
-                # print(match.printPoints())
-                # input()
                 break
 
         if match.noMoreLevels():
             break
 
         match.reset()
-        # match.update()
-
     match.gameEnd()
 
 
