@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------
 # Name:        movingObject.py
-# Purpose:
+# Version:     1.12
 #
 # Author:      Pawel Sznura
 #

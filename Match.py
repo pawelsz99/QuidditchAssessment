@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------
 # Name:        Match.py
-# Purpose:
+# Version:     1.12
 #
 # Author:      Pawel Sznura
 #
@@ -62,9 +62,6 @@ class Match():
             return True
         else:
             return False
-
-    def gameEnd(self):
-        print("game ends")
 
     def stillPlaying(self):
         if self.goldenSnitch.isFree():
