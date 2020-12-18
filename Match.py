@@ -132,11 +132,9 @@ class Match():
         seeker2 = self.teams[1].seeker
 
         if snitch.getRow() == seeker1.getRow() and snitch.getColumn() == seeker1.getColumn():
-            print("Snitch captured by team 1 ")
             self.awardPoints(self.teams[0])
             snitch.captured()
         elif snitch.getRow() == seeker2.getRow() and snitch.getColumn() == seeker2.getColumn():
-            print("Snitch captured by team 2 ")
             self.awardPoints(self.teams[1])
             snitch.captured()
 
@@ -155,18 +153,18 @@ class Match():
         return str(self.pitch)
 
     def printPoints(self):
-        printMe = "Points: Team " + self.teams[0].name + \
+        printMe = "Points: Team " + self.teams[0].getName() + \
             " " + str(self.teams[0].getPoints())
         printMe += " : " + \
-            str(self.teams[1].getPoints()) + " Team " + self.teams[1].name
+            str(self.teams[1].getPoints()) + " Team " + self.teams[1].getName()
         return printMe
 
     def printMoves(self):
-        printMe = "Moves: Team " + self.teams[0].name + \
+        printMe = "Moves: Team " + self.teams[0].getName() + \
             " " + str(self.teams[0].seeker.getMovesMade())
         printMe += " : " + \
             str(self.teams[1].seeker.getMovesMade()) + \
-            " Team " + self.teams[1].name
+            " Team " + self.teams[1].getName()
         return printMe
 
     def printLevel(self):

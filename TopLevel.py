@@ -19,8 +19,8 @@ import pygame
 from pygame.locals import *
 
 FPS = 30                    # frames per second to update the screen
-WINWIDTH = 800              # width of the program's window, in pixels
-WINHEIGHT = 900             # height in pixels
+WINWIDTH = 700              # width of the program's window, in pixels
+WINHEIGHT = 850             # height in pixels
 HALF_WINWIDTH = int(WINWIDTH / 2)  # you need to know 1/2 sizes so you can
 HALF_WINHEIGHT = int(WINHEIGHT / 2)  # place things centrally
 
@@ -146,7 +146,7 @@ def main():
             break
 
         match.reset()
-    match.gameEnd()
+    terminate()
 
 
 def drawMap(pitch):

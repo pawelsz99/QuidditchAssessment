@@ -13,10 +13,6 @@ class MovingObject:
         self.row = row
         self.column = column
 
-    def move(self, row, column):
-        self.row = row
-        self.column = column
-
     def getRow(self):
         return self.row
 
@@ -28,3 +24,7 @@ class MovingObject:
 
     def setColumn(self, newColumn):
         self.column = newColumn
+
+    def move(self, row, column):
+        self.setRow(row)
+        self.setColumn(column)
