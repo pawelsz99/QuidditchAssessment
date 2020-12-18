@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------
 # Name:        GoldenSnitch.py
-# Version:     1.12
+# Version:     1.14
 #
 # Author:      Pawel Sznura
 #

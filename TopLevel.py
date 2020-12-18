@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------
 # Name:        TopLevel.py
-# Version:     1.12
+# Version:     1.14
 #
 # Author:      Pawel Sznura
 #
@@ -33,7 +33,6 @@ BRIGHTBLUE = (0, 170, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BGCOLOR = BRIGHTBLUE
-TEXTCOLOR = WHITE
 
 # A dictionary of the images used.  You can then use#floor, wall etc
 # in place of the whole pathname
